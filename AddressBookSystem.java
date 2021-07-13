@@ -3,7 +3,7 @@ package addressBookSystem;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class AddressBookSystem {
+class AddressBookSystem {
 	ArrayList<AddressBookSystem> detailArray = new ArrayList<AddressBookSystem>();
 	private String firstName, lastName, address, city, state, email;
 	private long zip, phoneNo;
@@ -102,16 +102,17 @@ public class AddressBookSystem {
 		detail.setPhoneNo(scanner.nextLong());
 		detailArray.add(detail);
 	}
-	
+
 	public void edit(Scanner scanner) {
-		
+
 		System.out.println("Confirm your first name to edit details: ");
 		String name = scanner.next();
 
 		for (int i = 0; i < detailArray.size(); i++) {
 			if (detailArray.get(i).getFirstName().equals(name)) {
 				System.out.println("Select form below to change: ");
-				System.out.println("\n1.First Name\n2.Last Name\n3.Address\n4.city\n5.State\n6.Email\n7.Zip\n8.Phone number");
+				System.out.println(
+						"\n1.First Name\n2.Last Name\n3.Address\n4.city\n5.State\n6.Email\n7.Zip\n8.Phone number");
 				int edit = scanner.nextInt();
 
 				switch (edit) {
@@ -155,14 +156,33 @@ public class AddressBookSystem {
 
 	}
 
+	public void delete(Scanner scanner) {
+		System.out.println("Enter first name to delete contact");
+		String name = scanner.next();
+		for (int i = 0; i < detailArray.size(); i++) {
+
+			if (detailArray.get(i).getFirstName().equals(name)) {
+				detailArray.remove(i);
+			} else {
+				System.out.println("Enter valid first name");
+				break;
+			}
+			System.out.println("Detail deleted.");
+		}
+
+	}
+}
+
+class operatorAddressBook {
+	
 	public static void main(String[] args) {
-		int i=0;
+		int i = 0;
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Welcome to Address Book Program");
 		AddressBookSystem detail = new AddressBookSystem();
-		while (i==0) {
+		while (i == 0) {
 			System.out.println("What you want to do: ");
-			System.out.println("1.Add details.\n2.Edit details.");
+			System.out.println("1.Add details.\n2.Edit details.\n3.Delete");
 			int choose = scanner.nextInt();
 			switch (choose) {
 			case 1:
@@ -171,13 +191,17 @@ public class AddressBookSystem {
 			case 2:
 				detail.edit(scanner);
 				break;
+			case 3:
+				detail.delete(scanner);
+				break;
 			default:
-				i=1;
+				i = 1;
 				System.out.println("Wrong option");
 				detail.output();
 				break;
 			}
 		}
+		scanner.close();
 	}
 
 }
